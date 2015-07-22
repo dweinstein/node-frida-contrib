@@ -1,0 +1,31 @@
+{
+  "name": "frida-contrib",
+  "version": "0.0.1",
+  "description": "js util functions for frida",
+  "main": "index.js",
+  "bin": {
+    "frida-ios-dump-ui": "ios/uispy/bin/dump-ui"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dweinstein/node-frida-contrib.git"
+  },
+  "keywords": [
+    "frida",
+    "contrib"
+  ],
+  "author": "dweinstein",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dweinstein/node-frida-contrib/issues"
+  },
+  "homepage": "https://github.com/dweinstein/node-frida-contrib#readme",
+  "dependencies": {
+    "co": "^4.6.0",
+    "debug": "^2.2.0",
+    "frida": "^4.3.5"
+  }
+}

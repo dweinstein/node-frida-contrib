@@ -1,0 +1,39 @@
+#!/usr/bin/env node --harmony
+/*jshint node: true, esnext: true */
+'use strict';
+const frida = require('frida');
+const co    = require('co');
+const debug = require('debug')('dump-ui');
+const laif = require('../load-agent-into-frontmost');
+
+function toString() {
+  return (accum, line) => {
+    return accum+line+"\n";
+  };
+}
+
+const agent = [
+  'recv(() => {',
+  '  ObjC.schedule(ObjC.mainQueue, () => {',
+  '    const window = ObjC.classes.UIWindow.keyWindow();',
+  '    const ui = window.recursiveDescription().toString();',
+  '    send({ui: ui});',
+  '  });',
+  '});',
+].reduce(toString());
+
+function handleErr(err) {
+  console.error(err.stack);
+}
+
+function onMessage(msg) {
+  const payload = msg.payload;
+  if (payload && payload.ui) {
+    console.log(payload.ui);
+    process.exit(0);
+  }
+}
+
+debug(agent);
+laif(agent, onMessage)
+  .catch(handleErr);

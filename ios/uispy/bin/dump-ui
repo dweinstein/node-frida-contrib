@@ -4,7 +4,8 @@
 const frida = require('frida');
 const co    = require('co');
 const debug = require('debug')('dump-ui');
-const laif = require('../load-agent-into-frontmost');
+const resolveDevice = require('../../../common/resolve-device');
+const laif = require('../../../common/load-agent-into-frontmost');
 
 function toString() {
   return (accum, line) => {
@@ -35,5 +36,9 @@ function onMessage(msg) {
 }
 
 debug(agent);
-laif(agent, onMessage)
+
+resolveDevice()
+  .then(function (device) {
+    return laif(device, {name: 'uispy', script:agent}, onMessage);
+  })
   .catch(handleErr);

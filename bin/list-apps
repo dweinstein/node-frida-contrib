@@ -5,7 +5,7 @@ const resolveDevice = require('../common/resolve-device');
 const argv = require('minimist')(
   process.argv.slice(2), {
   default: {
-    remote: true
+    remote: false
   }
 });
 

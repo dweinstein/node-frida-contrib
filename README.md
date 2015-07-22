@@ -10,12 +10,22 @@ npm install -g frida-contrib
 
 # USAGE
 
-## iOS dump-ui
+## common
 
+### LIST APPS
+
+```
+± frida-list-apps
+```
+
+## iOS
+
+### DUMP UI ELEMENTS
 Dump the serialized UI.
 
 ```shell
 ± frida-ios-dump-ui | gist
 https://gist.github.com/7ec87584eebfd81e734f
 ```
+
 

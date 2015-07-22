@@ -4,7 +4,8 @@
   "description": "js util functions for frida",
   "main": "index.js",
   "bin": {
-    "frida-ios-dump-ui": "ios/uispy/bin/dump-ui"
+    "frida-ios-dump-ui": "ios/uispy/bin/dump-ui",
+    "frida-list-apps": "bin/list-apps"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -26,6 +27,8 @@
   "dependencies": {
     "co": "^4.6.0",
     "debug": "^2.2.0",
-    "frida": "^4.3.5"
+    "easy-table": "^1.0.0",
+    "frida": "^4.3.5",
+    "minimist": "^1.1.1"
   }
 }

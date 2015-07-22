@@ -16,6 +16,23 @@ npm install -g frida-contrib
 
 ```
 ± frida-list-apps
+Name             Identifier                     PID
+---------------  -----------------------------  ---
+App Store        com.apple.AppStore             -  
+Calculator       com.apple.calculator           -  
+Calendar         com.apple.mobilecal            -  
+Camera           com.apple.camera               -  
+Clock            com.apple.mobiletimer          -  
+Compass          com.apple.compass              -  
+Contacts         com.apple.MobileAddressBook    -  
+Cydia            com.saurik.Cydia               -  
+FaceTime         com.apple.facetime             -  
+Game Center      com.apple.gamecenter           -  
+Health           com.apple.Health               -  
+Mail             com.apple.mobilemail           412
+Maps             com.apple.Maps                 -  
+Messages         com.apple.MobileSMS            -  
+...
 ```
 
 ## iOS
@@ -27,5 +44,4 @@ Dump the serialized UI.
 ± frida-ios-dump-ui | gist
 https://gist.github.com/7ec87584eebfd81e734f
 ```
-
 

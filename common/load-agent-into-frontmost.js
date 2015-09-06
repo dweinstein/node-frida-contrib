@@ -22,13 +22,12 @@ module.exports = co.wrap(function* (device, agent, onMessage) {
   yield script.load();
   debug('after load');
 
-  if (onMessage) {
-    script.events.listen('message', onMessage);
-  } else {
-    script.events.listen('message', function (msg) {
+  script.events.listen(
+    'message',
+    typeof onMessage === 'function' ?  onMessage : function (msg) {
       console.log(msg);
-    });
-  }
+    }
+  );
 
   yield script.postMessage({});
   debug('loaded');

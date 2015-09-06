@@ -6,6 +6,7 @@
   "bin": {
     "frida-ios-dump-ui": "ios/uispy/bin/dump-ui",
     "frida-ios-kill-ssl": "ios/ssl-killer/bin/ssl-killer",
+    "frida-ios-screenshot": "ios/screenshot/bin/screenshot",
     "frida-list-apps": "bin/list-apps"
   },
   "scripts": {

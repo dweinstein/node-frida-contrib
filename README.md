@@ -10,32 +10,61 @@ npm install -g frida-contrib
 
 # USAGE
 
+The library exports a few bins for convenience that will be installed globally if you use the `-g` option above.
+
 ## common
 
 ### LIST APPS
 
 ```
 ± frida-list-apps
-Name             Identifier                     PID
----------------  -----------------------------  ---
-App Store        com.apple.AppStore             -  
-Calculator       com.apple.calculator           -  
-Calendar         com.apple.mobilecal            -  
-Camera           com.apple.camera               -  
-Clock            com.apple.mobiletimer          -  
-Compass          com.apple.compass              -  
-Contacts         com.apple.MobileAddressBook    -  
-Cydia            com.saurik.Cydia               -  
-FaceTime         com.apple.facetime             -  
-Game Center      com.apple.gamecenter           -  
-Health           com.apple.Health               -  
-Mail             com.apple.mobilemail           412
-Maps             com.apple.Maps                 -  
-Messages         com.apple.MobileSMS            -  
-...
+Running  Name          Identifier                   PID
+-------  ------------  ---------------------------  ---
+-        App Store     com.apple.AppStore           -
+-        Apple Watch   com.apple.Bridge             -
+-        Calculator    com.insitusec.Calculator     -
+-        Calculator    com.apple.calculator         -
+-        Calendar      com.apple.mobilecal          -
+-        Camera        com.apple.camera             -
+-        Clock         com.apple.mobiletimer        -
+-        Compass       com.apple.compass            -
+-        Contacts      com.apple.MobileAddressBook  -
+-        Cydia         com.saurik.Cydia             -
+-        FaceTime      com.apple.facetime           -
+-        FileBrowser   com.insitusec.FileBrowser    -
+-        Game Center   com.apple.gamecenter         -
+-        Health        com.apple.Health             -
+R        Mail          com.apple.mobilemail         169
+-        Maps          com.apple.Maps               -
+-        Messages      com.apple.MobileSMS          -
+-        Music         com.apple.Music              -
+-        Notes         com.apple.mobilenotes        -
+-        Passbook      com.apple.Passbook           -
+-        Phone         com.apple.mobilephone        -
+-        Photos        com.apple.mobileslideshow    -
+-        Podcasts      com.apple.podcasts           -
+-        Reminders     com.apple.reminders          -
+R        Safari        com.apple.mobilesafari       315
+-        Settings      com.apple.Preferences        -
+-        Starbucks     com.starbucks.mystarbucks    -
+-        Stocks        com.apple.stocks             -
+-        Tips          com.apple.tips               -
+-        Videos        com.apple.videos             -
+-        Voice Memos   com.apple.VoiceMemos         -
+-        Weather       com.apple.weather            -
+-        iBooks        com.apple.iBooks             -
+-        iTunes Store  com.apple.MobileStore        -
 ```
 
 ## iOS
+
+### Screenshot
+
+Take a screen shot of the front-most application. Writes a file with `"png"` extension to your current directory with a timestamp.
+
+```shell
+± frida-ios-screenshot
+```
 
 ### DUMP UI ELEMENTS
 Dump the serialized UI.

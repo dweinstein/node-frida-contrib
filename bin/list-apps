@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node --harmony --harmony_arrow_functions
 'use strict';
 const listApps = require('../common/list-apps');
 const resolveDevice = require('../common/resolve-device');
@@ -12,12 +12,12 @@ const argv = require('minimist')(
 const remote = argv.remote || argv.R;
 
 resolveDevice({remote: remote})
-.then(function (device) {
+.then(device => {
   return listApps(device)
-    .then(function (res) {
+    .then(res => {
       console.log(res);
     })
-    .catch(function (err) {
+    .catch(err => {
         console.error(err);
         process.exit(1);
     });

@@ -12,12 +12,14 @@ function handleErr(err) {
   console.error(err.stack);
 }
 
-function onMessage(msg, data) {
-  const payload = msg.payload;
-  const info = payload.info;
-  info && info.timestamp && info.format && 
-    require('fs').writeFileSync('./'+info.timestamp+'.'+info.format, data);
-  process.exit(0);
+function onMessage(err, msg) {
+  if (err) { throw err; }
+  debug(msg);
+  if(msg && msg.timestamp && msg.format && msg.pixels) {
+    require('fs').writeFileSync('./'+msg.timestamp+'.'+msg.format, msg.pixels);
+    process.exit(0);
+  }
+  process.exit(1);
 }
 
 

@@ -41,7 +41,9 @@ function screenshot(view) {
     name: '+screenshot',
     info: {
       timestamp: Date.now(),
-      format: 'png'
+      format: 'png',
+      width: size[0],
+      height: size[1]
     }
   }, Memory.readByteArray(png.bytes(), png.length()));
 }

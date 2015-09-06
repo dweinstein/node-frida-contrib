@@ -1,0 +1,28 @@
+#!/usr/bin/env node --harmony --harmony_arrow_functions
+/*jshint node: true, esnext: true */
+'use strict';
+const frida = require('frida');
+const co    = require('co');
+const debug = require('debug')('screenshot');
+const resolveDevice = require('../../../common/resolve-device');
+const laif = require('../../../common/load-agent-into-frontmost');
+const lib = require('../index')({});
+
+function handleErr(err) {
+  console.error(err.stack);
+}
+
+function onMessage(msg, data) {
+  const payload = msg.payload;
+  const info = payload.info;
+  info && info.timestamp && info.format && 
+    require('fs').writeFileSync('./'+info.timestamp+'.'+info.format, data);
+  process.exit(0);
+}
+
+
+resolveDevice()
+  .then((device) => {
+    lib.getScreenshot(device, onMessage);
+  })
+  .catch(handleErr);

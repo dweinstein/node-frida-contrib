@@ -1,4 +1,4 @@
-#!/usr/bin/env node --harmony
+#!/usr/bin/env node --harmony --harmony_arrow_functions
 /*jshint node: true, esnext: true */
 'use strict';
 const frida = require('frida');

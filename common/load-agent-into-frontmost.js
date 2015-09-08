@@ -31,4 +31,5 @@ module.exports = co.wrap(function* (device, agent, onMessage) {
 
   yield script.postMessage({});
   debug('loaded');
+  return yield script.getExports();
 });

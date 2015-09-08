@@ -26,29 +26,31 @@ const UIImagePNGRepresentation = new NativeFunction(
   ['pointer']
 );
 
-function screenshot(view) {
-  const bounds = view.bounds();
-  const size = bounds[1];
-  UIGraphicsBeginImageContextWithOptions(size, 0, 0);
+rpc.exports.screenshot = function screenshot() {
+  return new Promise(resolve => {
+    ObjC.schedule(ObjC.mainQueue, () => {
+      const view = UIWindow.keyWindow();
+      const bounds = view.bounds();
+      const size = bounds[1];
+      UIGraphicsBeginImageContextWithOptions(size, 0, 0);
 
-  view.drawViewHierarchyInRect_afterScreenUpdates_(bounds, true);
+      view.drawViewHierarchyInRect_afterScreenUpdates_(bounds, true);
 
-  const image = UIGraphicsGetImageFromCurrentImageContext();
-  UIGraphicsEndImageContext();
+      const image = UIGraphicsGetImageFromCurrentImageContext();
+      UIGraphicsEndImageContext();
 
-  const png = new ObjC.Object(UIImagePNGRepresentation(image));
-  send({
-    name: '+screenshot',
-    info: {
-      timestamp: Date.now(),
-      format: 'png',
-      width: size[0],
-      height: size[1]
-    }
-  }, Memory.readByteArray(png.bytes(), png.length()));
-}
+      const png = new ObjC.Object(UIImagePNGRepresentation(image));
+      return resolve({
+        info: {
+          timestamp: Date.now(),
+          format: 'png',
+          width: size[0],
+          height: size[1],
+          scale: view.contentScaleFactor()
+        },
+        png: Memory.readByteArray(png.bytes(), png.length())
+      });
+    });
+  });
+};
 
-ObjC.schedule(ObjC.mainQueue, () => {
-  const window = UIWindow.keyWindow();
-  screenshot(window);
-});

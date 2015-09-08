@@ -7,24 +7,18 @@ const debug = require('debug')('screenshot');
 const resolveDevice = require('../../../common/resolve-device');
 const laif = require('../../../common/load-agent-into-frontmost');
 const lib = require('../index')({});
+const writeFileSync = require('fs').writeFileSync;
 
 function handleErr(err) {
   console.error(err.stack);
-}
-
-function onMessage(err, msg) {
-  if (err) { throw err; }
-  debug(msg);
-  if(msg && msg.timestamp && msg.format && msg.pixels) {
-    require('fs').writeFileSync('./'+msg.timestamp+'.'+msg.format, msg.pixels);
-    process.exit(0);
-  }
   process.exit(1);
 }
 
-
-resolveDevice()
-  .then((device) => {
-    lib.getScreenshot(device, onMessage);
-  })
-  .catch(handleErr);
+co(function*() {
+  const device = yield resolveDevice();
+  const screenshot = yield lib.getScreenshot(device);
+  const info = screenshot.info;
+  debug(info);
+  writeFileSync('./'+info.timestamp+'.'+info.format, screenshot.png, 'binary');
+  process.exit(0);
+}).catch(handleErr);

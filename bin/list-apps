@@ -2,23 +2,14 @@
 'use strict';
 const listApps = require('../common/list-apps');
 const resolveDevice = require('../common/resolve-device');
-const argv = require('minimist')(
-  process.argv.slice(2), {
-  default: {
-    remote: false
-  }
-});
+const rc = require('../config');
+const co = require('co');
 
-const remote = argv.remote || argv.R;
-
-resolveDevice({remote: remote})
-.then(device => {
-  return listApps(device)
-    .then(res => {
-      console.log(res);
-    })
-    .catch(err => {
-        console.error(err);
-        process.exit(1);
-    });
+co(function*() {
+  const device = yield resolveDevice(rc);
+  const apps = yield listApps(device);
+  console.log(apps.toString());
+}).catch(err => {
+  console.error(err);
+  process.exit(1);
 });

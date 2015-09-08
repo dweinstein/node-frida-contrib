@@ -1,6 +1,7 @@
 'use strict';
 const co = require('co');
 const Table = require('easy-table');
+const debug = require('debug')('list-apps');
 
 module.exports = co.wrap(function*(device) {
   const apps = yield device.enumerateApplications();
@@ -13,5 +14,5 @@ module.exports = co.wrap(function*(device) {
     t.newRow();
   });
   t.sort(['Name|asc']);
-  return t.toString();
+  return t;
 });

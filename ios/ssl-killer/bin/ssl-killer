@@ -3,6 +3,7 @@
 'use strict';
 const frida = require('frida');
 const co    = require('co');
+const rc = require('../../../config');
 const debug = require('debug')('dump-ui');
 const resolveDevice = require('../../../common/resolve-device');
 const laif = require('../../../common/load-agent-into-frontmost');
@@ -18,16 +19,15 @@ const agent = fs.readFileSync(__dirname+'/../agent.js').toString();
 
 function handleErr(err) {
   console.error(err.stack);
+  process.exit(1);
 }
 
 function onMessage(msg) {
   console.log(msg);
 }
 
-debug(agent);
-
-resolveDevice()
-  .then(function (device) {
-    return laif(device, {name: 'ssl-killer', script: agent}, onMessage);
-  })
-  .catch(handleErr);
+co(function*() {
+  debug(agent);
+  const device = resolveDevice(rc);
+  yield laif(device, {name: 'ssl-killer', script: agent}, onMessage);
+}).catch(handleErr);

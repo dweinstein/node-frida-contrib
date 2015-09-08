@@ -4,6 +4,7 @@
 const frida = require('frida');
 const co    = require('co');
 const debug = require('debug')('screenshot');
+const rc = require('../../../config');
 const resolveDevice = require('../../../common/resolve-device');
 const laif = require('../../../common/load-agent-into-frontmost');
 const lib = require('../index')({});
@@ -15,7 +16,7 @@ function handleErr(err) {
 }
 
 co(function*() {
-  const device = yield resolveDevice();
+  const device = yield resolveDevice(rc);
   const screenshot = yield lib.getScreenshot(device);
   const info = screenshot.info;
   debug(info);

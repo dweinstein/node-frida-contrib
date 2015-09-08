@@ -1,15 +1,14 @@
 const frida = require('frida');
 const debug = require('debug')('resolve-device');
+const co = require('co');
 
 /*
  * Resolve device whether remote or USB.
 */
-module.exports = function resolveDevice(opts) {
+module.exports = co.wrap(function* (opts) {
   const device = opts && opts.remote ?
-    frida.getRemoteDevice() :
-    frida.getUsbDevice();
-  return device.then(device => {
-    debug(device);
-    return device;
-  });
-};
+    yield frida.getRemoteDevice() :
+    yield frida.getUsbDevice();
+  debug(device);
+  return device;
+});

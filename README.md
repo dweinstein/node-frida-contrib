@@ -1,8 +1,10 @@
 # SYNOPSIS
 
-A collection of utilities that use [frida](http://www.frida.re/)
+A collection of utilities that use [frida](http://www.frida.re/).
 
 # INSTALL
+
+For setting up Frida on your jailbroken iOS device via Cydia, check out [the instructions](http://www.frida.re/docs/ios/). You'll want to have installed Frida version >= 4.4.0 installed on the device.
 
 ```
 npm install -g frida-contrib

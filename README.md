@@ -76,7 +76,7 @@ https://gist.github.com/7ec87584eebfd81e734f
 
 ### SSL Killer
 
-[ios-ssl-kill-switch](https://github.com/iSECPartners/ios-ssl-kill-switch) ported to Frida. This tool will kill SSL on the frontmost application at the of execution.
+[ios-ssl-kill-switch](https://github.com/iSECPartners/ios-ssl-kill-switch) ported to Frida. This tool will kill SSL on the frontmost application.
 
 ```shell
 ± frida-ios-ssl-ui

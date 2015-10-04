@@ -1,6 +1,6 @@
 {
   "name": "frida-contrib",
-  "version": "0.0.8",
+  "version": "0.1.0",
   "description": "js util functions for frida",
   "main": "index.js",
   "bin": {

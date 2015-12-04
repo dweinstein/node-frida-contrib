@@ -10,7 +10,6 @@ module.exports = co.wrap(function* (device, agent, onMessage) {
   assert(device, 'require device');
   assert(agent.script, 'require agent.script');
   assert(agent.name, 'require agent.name');
-
   const application = yield device.getFrontmostApplication();
   if (application === null) {
     throw new Error('no frontmost');

@@ -20,6 +20,9 @@ co(function*() {
   const screenshot = yield lib.getScreenshot(device);
   const info = screenshot.info;
   debug(info);
-  writeFileSync('./'+info.timestamp+'.'+info.format, screenshot.png, 'binary');
+  debug('typeof png: ', typeof screenshot.png);
+  //debug('slice:', screenshot.png.slice);
+  debug('length of png: ', screenshot.png.length);
+  writeFileSync('./'+info.timestamp+'.'+info.format, new Buffer(new Uint8Array(screenshot.png)), 'binary');
   process.exit(0);
 }).catch(handleErr);

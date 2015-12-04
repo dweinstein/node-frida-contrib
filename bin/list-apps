@@ -4,6 +4,7 @@ const listApps = require('../common/list-apps');
 const resolveDevice = require('../common/resolve-device');
 const rc = require('../config');
 const co = require('co');
+const frida = require('frida');
 
 co(function*() {
   const device = yield resolveDevice(rc);

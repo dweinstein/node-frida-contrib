@@ -1,5 +1,5 @@
 /* jshint node: true, esnext: true */
-/* global ObjC, NativeFunction, Process, Memory, Module */
+/* global ObjC, NativeFunction, Process, Memory, Module, rpc */
 
 const UIWindow = ObjC.classes.UIWindow;
 const CGFloat = (Process.pointerSize === 4) ? 'float' : 'double';
@@ -26,9 +26,9 @@ const UIImagePNGRepresentation = new NativeFunction(
   ['pointer']
 );
 
-rpc.exports.screenshot = function screenshot() {
-  return new Promise(resolve => {
-    ObjC.schedule(ObjC.mainQueue, () => {
+rpc.exports.screenshot = function screenshot () {
+  return new Promise(function (resolve) {
+    ObjC.schedule(ObjC.mainQueue, function () {
       const view = UIWindow.keyWindow();
       const bounds = view.bounds();
       const size = bounds[1];
@@ -40,6 +40,7 @@ rpc.exports.screenshot = function screenshot() {
       UIGraphicsEndImageContext();
 
       const png = new ObjC.Object(UIImagePNGRepresentation(image));
+      const bytes = new Uint8Array(Memory.readByteArray(png.bytes(), png.length()));
       return resolve({
         info: {
           timestamp: Date.now(),
@@ -48,7 +49,7 @@ rpc.exports.screenshot = function screenshot() {
           height: size[1],
           scale: view.contentScaleFactor()
         },
-        png: Memory.readByteArray(png.bytes(), png.length())
+        png: Array.from(bytes)
       });
     });
   });

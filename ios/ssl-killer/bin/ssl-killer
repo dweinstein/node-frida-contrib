@@ -28,6 +28,6 @@ function onMessage(msg) {
 
 co(function*() {
   debug(agent);
-  const device = resolveDevice(rc);
+  const device = yield resolveDevice(rc);
   yield laif(device, {name: 'ssl-killer', script: agent}, onMessage);
 }).catch(handleErr);

@@ -5,35 +5,35 @@
 
 /* SSLContextRef SSLCreateContext ( CFAllocatorRef alloc, SSLProtocolSide protocolSide, SSLConnectionType connectionType );
  * */
-const SSLCreateContext = new NativeFunction(
+var SSLCreateContext = new NativeFunction(
   Module.findExportByName("Security", "SSLCreateContext"),
   'pointer',
   ['pointer', 'int', 'int']
 );
 
 /* OSStatus SSLHandshake ( SSLContextRef context ); */
-const SSLHandshake = new NativeFunction(
+var SSLHandshake = new NativeFunction(
   Module.findExportByName("Security", "SSLHandshake"),
   'int',
   ['pointer']
 );
 
 /* OSStatus SSLSetSessionOption ( SSLContextRef context, SSLSessionOption option, Boolean value );*/
-const SSLSetSessionOption= new NativeFunction(
+var SSLSetSessionOption= new NativeFunction(
   Module.findExportByName("Security", "SSLSetSessionOption"),
   'int',
   ['pointer', 'int', 'bool']
 );
 
-const errSSLServerAuthCompleted = -9481;
-const kSSLSessionOptionBreakOnServerAuth = 0;
-const noErr = 0;
+var errSSLServerAuthCompvared = -9481;
+var kSSLSessionOptionBreakOnServerAuth = 0;
+var noErr = 0;
 
 console.log('agent: ssl killer running!');
 
-Interceptor.replace(SSLHandshake, new NativeCallback(context => {
-  const result = SSLHandshake(context);
-  if (result === errSSLServerAuthCompleted) {
+Interceptor.replace(SSLHandshake, new NativeCallback(function (context) {
+  var result = SSLHandshake(context);
+  if (result === errSSLServerAuthCompvared) {
     //console.log('SSLHandshake override: ', result);
     return SSLHandshake(context);
   } else {
@@ -42,15 +42,15 @@ Interceptor.replace(SSLHandshake, new NativeCallback(context => {
   }
 }, 'int', ['pointer']));
 
-Interceptor.replace(SSLCreateContext, new NativeCallback((alloc, protocolSide, connectionType) => {
+Interceptor.replace(SSLCreateContext, new NativeCallback(function (alloc, protocolSide, connectionType) {
   //console.log('SSLCreateContext: set break on server auth');
-  let sslContext = SSLCreateContext(alloc, protocolSide, connectionType);
+  var sslContext = SSLCreateContext(alloc, protocolSide, connectionType);
   SSLSetSessionOption(sslContext, kSSLSessionOptionBreakOnServerAuth, 1);
   return sslContext;
   }, 'pointer', ['pointer', 'int', 'int'])
 );
 
-Interceptor.replace(SSLSetSessionOption, new NativeCallback((context, option, value) => {
+Interceptor.replace(SSLSetSessionOption, new NativeCallback(function (context, option, value) {
   if (option === kSSLSessionOptionBreakOnServerAuth) {
     //console.log('SSLSetSessionOption: override', option, '=>', value, ' ignored');
     return noErr;
